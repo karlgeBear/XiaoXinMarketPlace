@@ -1,1 +1,1 @@
-<view class="content">{{'123'+title+''}}</view>
+<view class="index"><view class="f-active">{{"123"+title}}</view><view class="iconfont icon-shouye">test icon</view></view>
