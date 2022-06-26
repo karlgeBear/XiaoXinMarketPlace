@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "uni-app",
+  "navigationBarTitleText": "小新商城",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationStyle": "custom",
   "usingComponents": {}
 }

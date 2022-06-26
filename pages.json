@@ -3,7 +3,25 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "小新商城",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationStyle": "custom", // 取消默认的原生导航栏
+				"app-plus": {  // 配置编译到H5 + App 平台时的特定样式
+					"titleNView": { //导航栏
+						"buttons": [  //标题栏上的自定义按钮 
+							{
+								"float": "left",
+								"fontSrc": "static/iconfont.ttf",
+								"text": "\ue62d"  // &#x 和 ; 删除，在头部加上\u
+							},
+							{
+								"float": "right",
+								"fontSrc": "static/iconfont.ttf",
+								"text": "\ue711"
+							}
+						]
+					}
+				}
 			}
 		}
 	    ,{
