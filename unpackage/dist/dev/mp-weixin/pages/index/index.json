@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "小新商城",
-  "navigationBarBackgroundColor": "#FFFFFF",
-  "usingComponents": {
-    "index-swiper": "/components/index/IndexSwiper"
-  }
-}
