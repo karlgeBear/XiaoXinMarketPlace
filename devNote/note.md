@@ -21,3 +21,6 @@
 			</view>
 		<!-- #endif -->
 ```
+## 内置组件
+- swiper:
+	- 不可把swiper组件的组件名设置为swiper

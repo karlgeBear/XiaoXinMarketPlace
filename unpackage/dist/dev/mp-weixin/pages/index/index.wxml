@@ -1,1 +1,1 @@
-<view class="index"><view class="wx-nav"><view class="iconfont icon-Magnifier"></view><text>小新商城</text><view class="iconfont icon-xiaoxi"></view></view><view class="f-active">{{"123"+title}}</view><view class="iconfont icon-shouye">test icon</view></view>
+<view class="index"><index-swiper vue-id="8dd740cc-1" bind:__l="__l"></index-swiper></view>
