@@ -24,3 +24,24 @@
 ## 内置组件
 - swiper:
 	- 不可把swiper组件的组件名设置为swiper
+## 隐藏滚动条
+- 在scroll-view隐藏滚动条：
+	- 设置属性show-scrollbar为false,在ios下失效
+- 应用中隐藏竖向滚动条
+	- 在pages.json中配置: (在ios失效)
+```
+	"app-plus": {  // 配置编译到H5 + App 平台时的特定样式
+				"scrollIndicator": "none",
+			}
+```
+	- 设置全局样式：
+```
+
+::-webkit-scrollbar{
+	display: none;
+	width: 0 !important;
+	height: 0 !important;
+	-webkit-appearance: none;
+	background: transparent;
+}
+```

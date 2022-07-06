@@ -7,6 +7,7 @@
 				"navigationBarBackgroundColor": "#FFFFFF",
 				// "navigationStyle": "custom", // 取消默认的原生导航栏
 				"app-plus": {  // 配置编译到H5 + App 平台时的特定样式
+				"scrollIndicator": "none",
 					"titleNView": { //导航栏
 						"buttons": [  //标题栏上的自定义按钮 
 							{
