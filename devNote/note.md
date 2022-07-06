@@ -49,3 +49,15 @@
 	background: transparent;
 }
 ```
+## 获取节点的高度
+```
+		// 监听页面初次渲染完成。注意如果渲染速度快，会在页面进入动画完成前触发
+		onReady() {
+			
+			let view = uni.createSelectorQuery().select(".home-data");
+			view.boundingClientRect(data => {
+			    this.clentHeight = data.height;
+			}).exec();
+			
+		},
+```

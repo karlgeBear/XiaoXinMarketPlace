@@ -95,7 +95,12 @@
 		},
 		//监听页面加载，其参数为上个页面传递的数据，参数类型为 Object（用于页面传参）
 		onLoad() {
-			
+			uni.request({
+				url:"http://192.168.1.3:3000/api/index_list/data",
+				success: (res) => {
+					console.log(res.data.a);
+				}
+			})
 		},
 		// 监听页面初次渲染完成。注意如果渲染速度快，会在页面进入动画完成前触发
 		onReady() {
