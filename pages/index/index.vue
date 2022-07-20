@@ -14,23 +14,27 @@
 		</scroll-view>
 		
 		 
-		<swiper  @change='onChangeTab' :current="topBarIndex" :style="'height:'+clentHeight+'px;'">
+		<swiper @change='onChangeTab' :current="topBarIndex" :style="'height:'+clentHeight+'px;'">
 			<swiper-item 
 				v-for='(item,index) in newTopBar'
 				:key='index'
 			>
-				<view class='home-data'>
-					<block v-for='(k,i) in item.data' :key='i'>
-						
-						<IndexSwiper v-if='k.type==="swiperList"' :dataList='k.data'></IndexSwiper>
-						<template v-if='k.type==="recommendList"' >
-							<Recommend :dataList='k.data'></Recommend>
-							<Card cardTitle='猜你喜欢'></Card>
-						</template>
-						<CommodityList v-if='k.type==="commodityList"' :dataList='k.data'></CommodityList>
-						
+				<scroll-view scroll-y="true"  :style="'height:'+clentHeight+'px;'">
+					<block v-if='item.data.length > 0 '>
+						<block v-for='(k,i) in item.data' :key='i'>
+							<IndexSwiper v-if='k.type==="swiperList"' :dataList='k.data'></IndexSwiper>
+							<template v-if='k.type==="recommendList"' >
+								<Recommend :dataList='k.data'></Recommend>
+								<Card cardTitle='猜你喜欢'></Card>
+							</template>
+							<CommodityList v-if='k.type==="commodityList"' :dataList='k.data'></CommodityList>
+							
+						</block>
 					</block>
-				</view>
+					<view v-else>
+						暂无数据...
+					</view>
+				</scroll-view>
 			</swiper-item>
 		</swiper>
 		
@@ -40,7 +44,7 @@
 		<Card cardTitle='猜你喜欢'></Card>
 		<CommodityList></CommodityList> -->
 		
-		<!-- 其他模版：运动户外、美妆.. -->
+		<!-- 其他模版：运动户外、美妆... -->
 		<!-- <Banner></Banner>
 		<Icons></Icons>
 		<Card cardTitle='热销爆品'></Card>
@@ -92,17 +96,18 @@
 		},
 		onReady() {
 			
-			let view = uni.createSelectorQuery().select(".home-data");
-			view.boundingClientRect(data => {
-			    this.clentHeight = 2000;
-				// this.clentHeight = data.height;
-			}).exec();
+			uni.getSystemInfo({
+				success: (res) => {
+					this.clentHeight = res.windowHeight - uni.upx2px(80)-this.getClientHeight();
+				}
+			})
 			
 		},
 		methods:{
+			//请求首页数据
 			__init(){
 				uni.request({
-					url:"http://192.168.1.6:3000/api/index_list/data",
+					url:"http://192.168.1.7:3000/api/index_list/data",
 					success: (res) => {
 						let data = res.data.data;
 						this.topBar = data.topBar;
@@ -110,6 +115,7 @@
 					}
 				})
 			},
+			//添加数据
 			initData(res){
 				let arr = [];
 				for(let i =0;i<this.topBar.length;i++){
@@ -124,6 +130,7 @@
 				}
 				return arr;
 			},
+			//点击顶栏
 			changeTab(index){
 				if(this.topBarIndex === index){
 					return ;
@@ -131,8 +138,22 @@
 				this.topBarIndex = index;
 				this.scrollIntoIndex = 'top'+index;
 			},
+			//对应滑动
 			onChangeTab(e){
 				this.changeTab(e.detail.current);
+			},
+			//获取可视区域高度【兼容】
+			getClientHeight(){
+				const res = uni.getSystemInfoSync();
+				const system = res.platform;
+				if( system ==='ios' ){
+					return 44+res.statusBarHeight;
+				}else if( system==='android' ){
+					return 48+res.statusBarHeight;
+				}else{
+					return 0;
+				}
+				
 			}
 		}
 	}

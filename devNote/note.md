@@ -50,6 +50,7 @@
 }
 ```
 ## 获取节点的高度
+- uni.createSelectorQuery()  
 ```
 		// 监听页面初次渲染完成。注意如果渲染速度快，会在页面进入动画完成前触发
 		onReady() {
@@ -61,3 +62,31 @@
 			
 		},
 ```
+- uni.getSystemInfo(OBJECT)
+```
+	//使用 uni.createSelectorQuery()获取节点高/***报错***/ 
+	// 问题可能出现在：需要在生命周期 mounted 后进行调用
+	uni.getSystemInfo({
+		success(res =>{
+			// 需要展示的高度=windowHeight - 顶部tab栏 -手机刘海-手机状态栏的高度
+			this.clentHeight = res.windowHeight - uni.upx2px(80) -this.getClientHeight();
+		})
+	})
+``` 
+- uni.getSystemInfoSync();
+```
+//获取可视区域高度【兼容】
+// 返回值：手机刘海+手机状态栏的高度
+getClientHeight(){
+	const res = uni.getSystemInfoSync();
+	const system = res.platform;
+	if( system ==='ios' ){
+		return 44+res.statusBarHeight;
+	}else if( system==='android' ){
+		return 48+res.statusBarHeight;
+	}else{
+		return 0;
+	}
+}
+```
+## 标签
