@@ -89,4 +89,46 @@ getClientHeight(){
 	}
 }
 ```
-## 标签
+## 封装request
+- 在common中新建api文件夹下的request.js，export default{}导出,返回值为一个promise
+- 在页面组件导入
+- 可以利用uni.showLoading()方法，在请求前显示加载数据，在请求成功后隐藏加载数据
+```
+export default{
+	common:{
+		baseUrl:"http://192.168.1.7:3000/api",
+		data:{},
+		header:{
+			"Content-Type":"application/json",
+			"Content-Type":"application/x-www-form-urlencoded"
+		},
+		method:"GET",
+		dataType:"json"
+	},
+	request( options={} ){
+		uni.showLoading({
+		    title: '加载中'
+		});
+		options.url = this.common.baseUrl + options.url;
+		options.data = 	options.data || this.common.data;
+		options.header = options.header || this.common.header;
+		options.method = options.method || this.common.method;
+		options.dataType = 	options.dataType || this.common.dataType;
+		return new Promise((res,rej)=>{
+			uni.request({
+				...options,
+				success: (result) => {
+					if(result.statusCode != 200){
+						return rej();
+					}
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 2000);
+					let data = result.data.data;
+					res(data);
+				}
+			})
+		})
+	}
+}
+```
