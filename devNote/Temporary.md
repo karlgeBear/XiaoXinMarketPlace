@@ -11,3 +11,19 @@
 	- 若设计稿宽度为 640px，元素 A 在设计稿上的宽度为 100px，那么元素 A 在 uni-app 里面的宽度应该设为：750 * 100 / 640，结果为：117upx。
 - 将rpx转化为px:
 	- uniapp.rpx2px(num)
+## 华为手机真机调试问题：
+- one
+	- 一般是手机连续点击版本号，直到出现开发者选项，打开开发者选项，勾选USB调试
+	- USB与电脑连接选择文件传输
+	- 结果：检测手机失败，一直在那里转小圈圈，就是不出来
+- two
+	- 下载华为手机组手，连接华为手机，检测不到真机
+	- 以及上one步骤，还是检测失败
+	- 说是要CD驱动器中下载华为手机组手，双击华为手机助手，没反应，USB已开启，还是失败
+- three
+	- 无线连接(利用hbuild中自带的adb.exe)
+		- HBuilderX\plugins\launcher\tools\adbs>adb tcpip 555
+		- HBuilderX\plugins\launcher\tools\adbs>adb connect 你手机上的ip
+		- 重启hbuild,点击运行项目到android App基座
+		- 检测成功(此时usb线未拔)，检测到两个设备，一个设备可能是usb连接的(咋出来的)，一个设备是无线连接的：你手机上的ip：555设备
+		- 检测成功之后我先运行到了，无线连接的那个, 运行过程中安装app基座失败，然后运行到了usb的那个，运行成功！！！

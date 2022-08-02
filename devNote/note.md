@@ -132,3 +132,66 @@ export default{
 	}
 }
 ```
+## 原生标题栏
+- 通过pages.json文件中的中style中进行配置
+- 通过uni-app的生命周期进行事件监听
+```
+onNavigationBarButtonTap(e){
+	// 可以借e判断点击的哪个，用uni.navigateTo(OBJECT) 进行路由跳转
+}
+```
+## @tag和@click的区别：
+- @click是组件被点击时触发，会有约300ms的延迟（内置处理优化了）；
+- @tap是手指触摸离开时触发，没有300ms的延迟，但是会有事件穿透;
+- 编译到小程序端，@click会被转换成@tap；
+## uni-app在App端动态修改原生导航栏
+- 在App端可以通过得到webview对象，
+- 通过当前 webview 对象的 
+- setTitleNViewButtonBadge，setTitleNViewButtonStyle， setTitleNViewSearchInputFocus，setTitleNViewSearchInputText 分别对
+ - TitleNView 上的按钮角标，按钮，输入框等组件的样式进行修改。
+```
+// #ifdef APP-PLUS  
+var webView = this.$mp.page.$getAppWebview();  
+
+// 修改buttons  
+// index: 按钮索引, style {WebviewTitleNViewButtonStyles }  
+webView.setTitleNViewButtonStyle(0, {  
+    text: 'hello',  
+});  
+
+// 修改按钮上的角标  
+// index: 按钮索引, text: 角标文本内容  
+webView.setTitleNViewButtonBadge({  
+    index: 0,  
+    text: 10,  
+});  
+
+// 设置 searchInput的 focus  
+// focus: true | false  
+webView.setTitleNViewSearchInputFocus(true)  
+
+// 设置 searchInput的 text  
+webView.setTitleNViewSearchInputText(text)  
+
+// searchInput 通过 webview 的 setStyle 方法进行更新  
+var tn = currentWebview.getStyle().titleNView;  
+if (tn.buttons) {    
+uni.getSystemInfo({    
+    success:function(res){    
+        if (res.platform=="ios") { // 这里在HBuilderX 1.9.9版本有个bug，searchInput的I变小写了 ，临时绕过下。更高版本会修复此bug    
+            tn.searchinput.placeholder = 'test';    
+            currentWebview.setStyle({    
+                titleNView: tn    
+            });    
+        } else{    
+            tn.searchInput.placeholder = 'test'; //这里有个已知bug，HBuilderX 1.9.9上，当searchInput位于首页时，动态设置placehold会导致buttons的点击事件消失。更高版本会修复此bug    
+            currentWebview.setStyle({    
+                titleNView: tn    
+            });    
+        }    
+    }    
+})    
+}    
+
+// #endif
+```

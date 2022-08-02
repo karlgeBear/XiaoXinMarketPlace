@@ -1,5 +1,8 @@
 ## index
 ```
+// 顶部和底部在pages.json中有个配置项列表中的属性:
+	// pages中可以设置设置页面路径及窗口表现
+	// tabBar中可以设置底部 tab 的表现
 <view class='index'>
 
 	<scroll-view></scroll-view>

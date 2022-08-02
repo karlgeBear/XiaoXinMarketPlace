@@ -111,6 +111,14 @@
 			})
 			
 		},
+		onNavigationBarButtonTap(e) {
+			if(e.float=='left'){
+				// console.log('go')
+				uni.navigateTo({
+					url:'../search/search'
+				})
+			}
+		},
 		methods:{
 			//请求首页数据
 			__init(){

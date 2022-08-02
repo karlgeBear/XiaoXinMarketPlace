@@ -8,7 +8,10 @@
 .f-active{
 	color: #49BDFB;
 }
-
+/*选中字体颜色*/
+.f-active-color{
+	color:#49BDFB;
+}
 /* 背景颜色 */
 .bg-color{
 	background-color: #42B7FB;
