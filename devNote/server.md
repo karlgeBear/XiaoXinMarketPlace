@@ -8,3 +8,26 @@
 - 注意事项：
 	- 1.改了后端的路由等信息，需要重新npm start
 	- 前端请求要用ip地址，不能用localhost
+
+## 连接数据库
+```
+// db/sql.js
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '1234',
+  database : 'unimarkout'
+});
+module.exports =  connection;
+
+// routes/index.js
+var connection = require('../db/sql.js');
+router.get("/api/goods/search", function(req, res, next){
+	connection.query('select * from goods_search', function (error, results, fields) {
+	  if (error) throw error;
+	  console.log('The solution is: ', results);
+	});
+
+})
+```
