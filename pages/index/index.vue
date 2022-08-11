@@ -175,7 +175,7 @@
 				if( system ==='ios' ){
 					return 44+res.statusBarHeight;
 				}else if( system==='android' ){
-					return 48+res.statusBarHeight;
+					return res.statusBarHeight-48;
 				}else{
 					return 0;
 				}

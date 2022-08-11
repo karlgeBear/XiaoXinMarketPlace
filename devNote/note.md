@@ -28,6 +28,8 @@
 	- scroll-into-view： 滚动到固定位置，舍去多余的位置
 		- 在scroll-view设置:scroll-into-view='string+dynamicNum'
 		- 子盒子设置:id='string+dynamicNum'
+	- 注意事项：
+		- 要设置高度
 ## 隐藏滚动条
 - 在scroll-view隐藏滚动条：
 	- 设置属性show-scrollbar为false,在ios下失效
