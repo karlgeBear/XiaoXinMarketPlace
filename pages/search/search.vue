@@ -9,7 +9,11 @@
 			</view>
 			<view>
 				<view v-if="searchData.length > 0">
-					<view class='search-name f-color' v-for="(item,index) in searchData" :key="index">{{item}}</view>
+					<view class='search-name f-color' 
+					v-for="(item,index) in searchData" 
+					:key="index"
+					@tap="toSearchList(item)"
+					>{{item}}</view>
 				</view>
 				<view class='search-end' v-else>暂无搜索记录</view>
 			</view>
@@ -71,9 +75,7 @@
 						icon: "none"
 					})
 				}else{
-					uni.navigateTo({
-						url:"../search-list/search-list?keyword="+this.keyword+""
-					})
+					this.toSearchList(this.keyword)
 				}
 				uni.hideKeyboard()
 				this.addSearch()
@@ -108,6 +110,14 @@
 							this.searchData = []
 						}
 					}
+				})
+			},
+			
+			// 点击搜索记录进行页面
+			toSearchList(item){
+				console.log(item)
+				uni.navigateTo({
+					url: "../search-list/search-list?keyword="+item+""
 				})
 			}
 		}

@@ -1,6 +1,5 @@
 <template>
 	<view class='shop-list'>
-		{{keyword}}
 		<view class='shop-title f-color'>
 			<view class='shop-item'
 				v-for="(item,index) in shopList.data"
@@ -24,65 +23,66 @@
 </template>
 
 <script>
+import $http from '@/common/api/request.js'
 import Lines from '@/components/common/Lines.vue'
 import CommodityList from './CommodityList.vue'
 export default {
+		props:{
+			keyword:String
+		},
 		data() {
 			return {
 				shopList:{
 				    currentIndex:0,
 					data:[
-						{name:"价格",status:1},
-						{name:"折扣",status:0},
+						{name:"价格",status:1,key:"pprice"},
+						{name:"折扣",status:0,key:"discount"},
 						{name:"品牌",status:0}
 					]
 				},
-				dataList:[
-					{
-						id:1,
-						imgUrl:"../../static/imgs/commodity1.jpg",
-						name:"大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008",
-						pprice:"299",
-						oprice:"659",
-						discount:"5.2"
-					},
-					{
-						id:2,
-						imgUrl:"../../static/imgs/commodity2.jpg",
-						name:"大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008",
-						pprice:"299",
-						oprice:"659",
-						discount:"5.2"
-					},
-					{
-						id:3,
-						imgUrl:"../../static/imgs/commodity3.jpg",
-						name:"大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008",
-						pprice:"299",
-						oprice:"659",
-						discount:"5.2"
-					},
-					{
-						id:4,
-						imgUrl:"../../static/imgs/commodity4.jpg",
-						name:"大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008大姨绒毛大款2020年必须买,不买你就不行了,爆款疯狂GG008",
-						pprice:"299",
-						oprice:"659",
-						discount:"5.2"
-					}
-				]
+				dataList:[]
 			}
 		},
-		props:{
-			keyword: String
+		computed:{
+			orderBy(){
+				//拿到当前对象
+				let obj = this.shopList.data[this.shopList.currentIndex];
+				let val = obj.status === 1 ? "asc" : "desc" ;
+				return {
+					[obj.key]:val
+				}
+				
+			}
 		},
 		components:{
 			Lines,
 			CommodityList
 		},
+		mounted(){
+			this.getData();
+		},
 		methods: {
+			//请求数据数据
+			getData(){
+				$http.request({
+					url:"/goods/search",
+					data:{
+						name:this.keyword,
+						...this.orderBy
+					}
+				}).then((res)=>{
+					this.dataList = res;
+				}).catch(()=>{
+					uni.showToast({
+						title:'请求失败',
+						icon:'none'
+					})
+				})
+			},
 			changTab(index){
-				console.log(1)
+				console.log(this.orderBy);
+				//点击排序==》重新请求了数据
+				this.getData();
 				//索引值
 				let idx = this.shopList.currentIndex;
 				//具体哪一个对象
@@ -95,7 +95,6 @@ export default {
 				item.status = 0;
 				this.shopList.currentIndex = index;
 				newItem.status = 1;
-				
 			}
 		}
 	}
@@ -123,9 +122,9 @@ export default {
 	left:0;
 }
 .up{
-	top:-30rpx;
+	top:-34rpx;
 }
 .down{
-	top:-18rpx;
+	top:-24rpx;
 }
 </style>

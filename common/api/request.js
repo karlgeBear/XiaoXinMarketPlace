@@ -11,9 +11,9 @@ export default{
 	},
 	request( options={} ){
 		
-		uni.showLoading({
-		    title: '加载中'
-		});
+		// uni.showLoading({
+		//     title: '加载中'
+		// });
 		
 		options.url = this.common.baseUrl + options.url;
 		options.data = 	options.data || this.common.data;
@@ -27,9 +27,9 @@ export default{
 					if(result.statusCode != 200){
 						return rej();
 					}
-					setTimeout(function () {
-					    uni.hideLoading();
-					}, 2000);
+					// setTimeout(function () {
+					//     uni.hideLoading();
+					// }, 500);
 					let data = result.data.data;
 					res(data);
 				}
