@@ -125,6 +125,25 @@
             }
             
         }
+        ,{
+            "path" : "pages/details/details",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商品详情",
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"scrollIndicator": "none",
+					"titleNView": {
+						"type": "transparent",
+						"buttons": [
+							{"type": "menu"},
+							{"type": "share"}
+						]
+					}
+				}
+            }
+            
+        }
     ],
 	"globalStyle": {  // 用于设置应用的状态栏、导航条、标题、窗口背景色等。
 		"navigationBarTextStyle": "black",

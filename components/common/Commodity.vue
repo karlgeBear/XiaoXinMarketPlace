@@ -6,6 +6,7 @@
 			v-for="(item,index) in dataList"
 			:key='index'
 			:style="'width:'+itemW+';'"
+			@tap='goDetails'
 		>
 			<image 
 			class='commodity-img' 
@@ -51,6 +52,14 @@ export default {
 		nameSize:{
 			type:String,
 			default:"26rpx"
+		}
+	},
+	methods:{
+		goDetails(){
+			// console.log(1)
+			uni.navigateTo({
+				url:"../../pages/details/details"
+			})
 		}
 	}
 }
