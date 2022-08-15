@@ -125,6 +125,7 @@
 				$http.request({
 						url:"/index_list/data"
 					}).then((res)=>{
+						console.log(res)
 						this.topBar = res.topBar;
 						this.newTopBar = this.initData(res);
 					}).catch(()=>{
@@ -194,6 +195,7 @@
 				$http.request({
 					url:'/index_list/'+id+'/data/'+page+''
 				}).then((res)=>{
+					console.log(res)
 					this.newTopBar[index].data = [...this.newTopBar[index].data,...res];
 				}).catch(()=>{
 					uni.showToast({

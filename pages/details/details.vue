@@ -126,6 +126,28 @@
 				return true;
 			}
 		},
+		//点击分享
+		onNavigationBarButtonTap(e) {
+			if(e.type==='share'){
+				uni.share({
+					"provider":"weixin",
+					"type":0,
+					"scene":"WXSceneSession",
+					"title":this.goodsContent.name,
+					"href":"http://192.168.8.6:8080/#/pages/details/details?id="+this.goodsContent.id+"",
+					imageUrl:this.goodsContent.imgUrl,
+					success: function (res) {
+						uni.showTabBar({
+							title:"分享成功"
+						})
+					},
+					fail: function (err) {
+						console.log("fail:" + JSON.stringify(err));
+					}
+					
+				})
+			}
+		},
 		methods: {
 			//请求商品
 			getData(id){

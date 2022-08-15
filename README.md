@@ -19,5 +19,5 @@ common --------------- 公共文件：全局的css文件
 - 请用Hbuild安装微信开发者工具 || 连接真机USB启动开发者模式 || 下载手机模拟器启动开发者模式
 - 后端: 
 	- 进入server目录，cmd中输入命令：npm start
-	- 注意：手机和电脑的ip地址要一致，前端请求不是locahost而是采用ip地址
+	- 注意：手机和电脑的ip地址要一致，前端请求不是locahost而是采用ip地址(http://你的ip地址:3000/api/goods/list)
  
