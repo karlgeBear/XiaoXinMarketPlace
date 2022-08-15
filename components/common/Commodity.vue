@@ -6,7 +6,7 @@
 			v-for="(item,index) in dataList"
 			:key='index'
 			:style="'width:'+itemW+';'"
-			@tap='goDetails'
+			@tap='goDetails(item.id)'
 		>
 			<image 
 			class='commodity-img' 
@@ -55,10 +55,9 @@ export default {
 		}
 	},
 	methods:{
-		goDetails(){
-			// console.log(1)
+		goDetails(id){
 			uni.navigateTo({
-				url:"../../pages/details/details"
+				url:'../../pages/details/details?id='+id+''
 			})
 		}
 	}

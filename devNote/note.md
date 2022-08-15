@@ -197,3 +197,12 @@ uni.getSystemInfo({
 
 // #endif
 ```
+## onload(e)页面周期
+```
+// 页面加载完成，别的路由跳转过来带的？name=zxf&age=12,利用这个生命周期可以获取到
+onLoad(e) {
+	//e是一个对象
+	// e中包含url中query参数值（？name=zxf&age=12）
+	this.getData(e.id);
+},
+```
