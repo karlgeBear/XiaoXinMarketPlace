@@ -206,3 +206,8 @@ onLoad(e) {
 	this.getData(e.id);
 },
 ```
+## uni-nav-bar 自定义导航栏
+- 不想用原生的自定义导航栏，则用自定义的原生导航栏
+```
+<uni-nav-bar height="120rpx" title="自定义高度" />
+```
