@@ -1,121 +1,101 @@
 <template>
 	<view class='shop-cart'>
-		<!--自定义导航栏-->
-		<uniNavBar 
-			title='购物车' 
-			:right-text='  isNavBar?"完成":"编辑"   ' 
-			fixed='true'
-			@clickRight='  isNavBar = !isNavBar  '
-		></uniNavBar>
-		
-		<!--商品内容-->
-		<view class='shop-list'>
-			<view class='shop-item' v-for='(item,index) in list' :key='index'>
-				<label class="radio">
-					<radio value="" color="#FF3333"/><text></text>
-				</label>
-				<image class='shop-img' :src="item.imgUrl" mode=""></image>
-				<view class='shop-text'>
-					<view class='shop-name'>{{item.name}}</view>
-					<view class='shop-color f-color'>{{item.color}}</view>
-					<view class='shop-price'>
-						<view>¥{{item.pprice}}</view>
-						<view>*{{item.num}}</view>
+		<template v-if='  list.length > 0  '>
+			<!--自定义导航栏-->
+			<uniNavBar 
+				title='购物车' 
+				:right-text='  isNavBar?"完成":"编辑"   ' 
+				fixed='true'
+				status-bar='true'
+				@clickRight='  isNavBar = !isNavBar  '
+			></uniNavBar>
+			
+			<!--商品内容-->
+			<view class='shop-list'>
+				<view class='shop-item' v-for='(item,index) in list' :key='index'>
+					<label class="radio" @tap='selectedItem(index)'>
+						<radio value="" color="#FF3333" :checked="item.checked"/><text></text>
+					</label>
+					<image class='shop-img' :src="item.imgUrl" mode=""></image>
+					<view class='shop-text'>
+						<view class='shop-name'>{{item.name}}</view>
+						<view class='shop-color f-color'>{{item.color}}</view>
+						<view class='shop-price'>
+							<view>¥{{item.pprice}}</view>
+							
+							<template v-if='!isNavBar'>
+								<view>*{{item.num}}</view>
+							</template>
+							
+							<template v-else>
+								<uniNumberBox
+									:value='item.num'
+									min='1'
+									@change='changeNumber($event,index)'
+								>
+								</uniNumberBox>
+							</template>
+							
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<!--底部-->
-		<view class='shop-foot'>
-			<label class="radio foot-radio">
-				<radio value="" color='#FF3333'/><text>全选</text>
-			</label>
-			<view class='foot-total'>
-				<view class='foot-count'>合计：<text class='f-active-color'>¥0</text></view>
-				<view class='foot-num'>结算(0)</view>
+			<!--底部-->
+			<view class='shop-foot'>
+				<label class="radio foot-radio" @tap='checkedAllFn'>
+					<radio value="" color='#FF3333' :checked="checkedAll"/><text>全选</text>
+				</label>
+				
+				<template v-if='!isNavBar'>
+					<view class='foot-total'>
+						<view class='foot-count'>合计：<text class='f-active-color'>¥{{totalCount.pprice}}</text></view>
+						<view class='foot-num'>结算({{totalCount.num}})</view>
+					</view>
+				</template>
+				<template v-else>
+					<view class='foot-total'>
+						<view class='foot-num' style="background-color: #000000;">移入收藏夹</view>
+						<view class='foot-num' @tap='delGoodsFn'>删除</view>
+					</view>
+				</template>
+				
 			</view>
-		</view>
+		</template>
+		<template v-else>
+			<uniNavBar title='购物车' status-bar='true' fixed='true'></uniNavBar>
+			<view class='shop-else-list'>
+				<text>囧～购物车还是空的～</text>
+			</view>
+		</template>
 	</view>
 </template>
 
 <script>
 	import uniNavBar from '@/components/uni/uni-nav-bar/uni-nav-bar.vue'
+	import uniNumberBox from '@/components/uni/uni-number-box/uni-number-box.vue'
+	import {mapState,mapActions,mapGetters,mapMutations} from 'vuex'
 	export default {
 		data() {
 			return {
-				isNavBar:false,
-				list:[
-					{
-						checked:false,
-						id:1,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					},
-					{
-						checked:false,
-						id:2,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					},
-					{
-						checked:false,
-						id:2,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					},
-					{
-						checked:false,
-						id:2,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					},
-					{
-						checked:false,
-						id:2,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					},
-					{
-						checked:false,
-						id:2,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					},
-					{
-						checked:false,
-						id:2,
-						name:"打客服的和非恶搞认为微软业务打客服的和非恶搞认为微软业务",
-						color:"颜色：返回对方的过分的",
-						imgUrl:"../../static/imgs/Children2.jpg",
-						pprice:"27",
-						num:1
-					}
-				]
+				isNavBar:false
 			}
 		},
+		computed:{
+			...mapState({
+				list:state=>state.cart.list
+			}),
+			...mapGetters(['checkedAll','totalCount'])
+		},
 		components:{
-			uniNavBar
+			uniNavBar,
+			uniNumberBox
 		},
 		methods: {
-			
+			...mapActions(['checkedAllFn','delGoodsFn']),
+			...mapMutations(['selectedItem']),
+			changeNumber(value,index){
+				this.list[index].num = value;
+			}
 		}
 	}
 </script>
@@ -123,6 +103,17 @@
 <style scoped>
 .shop-list{
 	padding-bottom:100rpx;
+}
+.shop-else-list{
+	position: absolute;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	background-color: #F7F7F7;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .shop-item{
 	display: flex;
