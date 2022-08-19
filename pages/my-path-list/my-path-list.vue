@@ -1,40 +1,72 @@
 <template>
 	<view class='my-path-list'>
-		
 		<view class='path-list'>
-			<view class='path-item'>
+			
+			<view class='path-item' 
+				v-for='(item,index) in list' :key='index'
+				@tap='toAddPath(index)'
+			>
 				<view class='item-main'>
-					<view class='item-name'>张三</view>
-					<view>18511773322</view>
+					<view class='item-name'>{{item.name}}</view>
+					<view>{{item.tel}}</view>
 				</view>
 				<view class='item-main'>
-					<view class='active'>默认</view>
-					<view>北京市海淀区上地办公中心xxxx</view>
+					<view class='active' v-if='item.isDefault'>默认</view>
+					<view>{{item.city}} {{item.details}}</view>
 				</view>
 			</view>
+			
+			
 		</view>
 		
 		<view class='add-path'>
-			<view class='add-path-btn'>新增地址</view>
+			<view class='add-path-btn' @tap='goAddPath'>新增地址</view>
 		</view>
 		
 	</view>
 </template>
 
 <script>
+	import {mapState} from 'vuex'
 	export default {
 		data() {
 			return {
 				
 			}
 		},
+		computed:{
+			...mapState({
+				list:state=>state.path.list
+			})
+		},
+		onLoad() {
+			console.log(this.list)
+		},
 		methods: {
-			
+			//修改
+			toAddPath(index){
+				
+				let pathObj = JSON.stringify({
+					index:index,
+					item:this.list[index]
+				})
+				uni.navigateTo({
+					url:"../my-add-path/my-add-path?data="+pathObj+""
+				})
+				
+			},
+			//新增
+			goAddPath(){
+				uni.navigateTo({
+					url:"../my-add-path/my-add-path"
+				})
+			}
 		}
 	}
 </script>
 
 <style scoped>
+
 .path-list{
 	padding-left:20rpx;
 }
@@ -58,7 +90,7 @@
 	text-align: center;
 }
 .add-path{
-	padding:20rpx 0;
+	padding:20rpx;
 	width:100%;
 	display: flex;
 	justify-content: center;
