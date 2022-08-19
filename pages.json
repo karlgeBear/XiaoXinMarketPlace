@@ -144,6 +144,31 @@
             }
             
         }
+        ,{
+            "path" : "pages/my/my-config/my-config",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置"
+            }
+            
+        }
+        ,{
+            "path" : "pages/my-config/my-config",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "地址管理"
+            }
+            
+        }
+        ,{
+            "path" : "pages/my-path-list/my-path-list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {  // 用于设置应用的状态栏、导航条、标题、窗口背景色等。
 		"navigationBarTextStyle": "black",
