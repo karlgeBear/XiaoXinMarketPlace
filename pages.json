@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "百年奥莱",
+				"navigationBarTitleText": "小新商城",
 				"navigationBarBackgroundColor":"#FFFFFF",
 				"app-plus":{
 					"scrollIndicator":"none",
@@ -12,12 +12,12 @@
 							{
 								"float":"left",
 								"fontSrc":"./static/iconfont.ttf",
-								"text":"\ue69d"
+								"text":"\ue62d"
 							},
 							{
 								"float":"right",
 								"fontSrc":"./static/iconfont.ttf",
-								"text":"\ue622"
+								"text":"\ue711"
 							}
 						]
 					}
@@ -179,7 +179,14 @@
 				"navigationBarTitleText": "我的订单",
 				"navigationBarBackgroundColor":"#FFFFFF"
 			}
-        }
+        },
+		{
+			"path" : "pages/confirm-order/confirm-order",
+			"style" : {
+				"navigationBarTitleText": "确认订单",
+				"navigationBarBackgroundColor":"#FFFFFF"
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

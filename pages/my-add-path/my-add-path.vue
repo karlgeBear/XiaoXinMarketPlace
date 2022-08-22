@@ -25,7 +25,7 @@
 		
 		<view class='path-item'>
 			<view>设为默认地址</view>
-			<radio-group name="" @change="radioChange">
+			<radio-group name="" @tap="radioChange">
 				<label class="radio">
 					<radio color="#FF3333" :checked="pathObj.isDefault"/><text></text>
 				</label>
@@ -98,6 +98,7 @@
 			},
 			radioChange(){
 				this.pathObj.isDefault = !this.pathObj.isDefault;
+				console.log(this.pathObj.isDefault);
 			}
 		}
 	}

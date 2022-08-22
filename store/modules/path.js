@@ -13,12 +13,14 @@ export default {
 				tel:"18511773322",
 				city:"北京市海淀区",
 				details:'2号楼',
-				isDefault:true
+				isDefault:true  // 默认地址
 			}
 		]
 	},
 	getters:{
-		
+		defaultPath(state){
+			return state.list.filter(v=>v.isDefault)
+		}
 	},
 	mutations:{
 		createPath( state, obj ){

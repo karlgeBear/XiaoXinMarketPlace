@@ -211,6 +211,42 @@ onLoad(e) {
 ```
 <uni-nav-bar height="120rpx" title="自定义高度" />
 ```
+## 页面通讯
+#### 场景：在确认订单时，修改默认地址，
+- 1.在确定订单页 点击地址 跳转到 我的地址，在我的地址中点击一个随机地址，直接回退，触发全局自定义事件
+```
+//返回确认订单页面
+	goConfirmOrder(item){
+		//如果是从确认订单过来的执行以下代码:
+		if(this.isSelectedPath){
+			//自定义事件：页面通讯
+			uni.$emit('selectPathItem',item);
+			//返回上一页
+			uni.navigateBack({
+				delta:1
+			})
+		}
+	}
+```
+- 1. 回退到确定订单页，监听全局自定义事件，从自定义事件传过来的参数，直接改变地址
+```
+	onLoad() {
+		//如果有默认地址的一个赋值
+		if(this.defaultPath.length){
+			this.path = this.defaultPath[0];
+		}
+		
+		//如果出发自定义事件，on去接受值
+		uni.$on("selectPathItem",(res)=>{
+			this.path = res;
+		})
+	},
+	onUnload() {
+		uni.$off('selectPathItem',()=>{
+			console.log('移除了selectPathItem');
+		})
+	},
+```
 ## 针对vuex保存中的数据问题？
 - 购物车？
 ```
