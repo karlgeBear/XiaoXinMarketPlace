@@ -187,6 +187,25 @@
 				"navigationBarBackgroundColor":"#FFFFFF"
 			}
 		}
+        ,{
+            "path" : "pages/payment/payment",
+            "style" : {
+				"app-plus":{
+					"titleNView":false,
+					"scrollIndicator":"none"
+				}
+			}
+            
+        }
+        ,{
+            "path" : "pages/payment-success/payment-success",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
