@@ -210,6 +210,14 @@ onLoad(e) {
 - 不想用原生的自定义导航栏，则用自定义的原生导航栏
 ```
 <uni-nav-bar height="120rpx" title="自定义高度" />
+
+在pages-json中的当前页面路由的中配置
+"style" : {
+				"app-plus":{
+					"titleNView":false,
+					"scrollIndicator":"none"
+				}
+			}
 ```
 ## 页面通讯
 #### 场景：在确认订单时，修改默认地址，

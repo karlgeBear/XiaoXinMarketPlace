@@ -206,6 +206,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {
+				"app-plus":{
+					"titleNView":false,
+					"scrollIndicator":"none"
+				}
+			}
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
