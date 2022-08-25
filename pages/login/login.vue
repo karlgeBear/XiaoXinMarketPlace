@@ -6,13 +6,13 @@
 				<scroll-view>
 					<view class='login-tel'>
 						<view class='tel-main'>
-							<view class='close'>
+							<view class='close' @tap='goBack'>
 								<image class='close-img' src="../../static/imgs/close.png" mode=""></image>
 							</view>
 							<view class='logo'>
 								<image class='logo-img' src="../../static/imgs/logo.jpg" mode=""></image>
 							</view>
-							<view class='tel'>手机号注册</view>
+							<view class='tel' @tap='goLoginTel'>手机号注册</view>
 							<LoginOther></LoginOther>
 							<view class='login-go'>
 								<view>已有账号，去登录</view>
@@ -27,7 +27,7 @@
 					<view class='login-tel'>
 						<view class='tel-main'>
 							<view class='close close-center'>
-								<view>
+								<view @tap='goBack'>
 									<image class='close-img' src="../../static/imgs/close.png" mode=""></image>
 								</view>
 								<view class='login-go'>
@@ -39,18 +39,18 @@
 							<view class='login-from'>
 								<view class='login-user'>
 									<text class='user-text'>账号</text>
-									<input type="text" value="" placeholder="请输入手机号/昵称"/>
+									<input type="text" v-model="userName" value="" placeholder="请输入手机号/昵称"/>
 								</view>
 								<view class='login-user'>
 									<text class='user-text'>密码</text>
-									<input type="text" value="" placeholder="6-16位字符"/>
+									<input type="text" v-model="userPwd" value="" placeholder="6-16位字符"/>
 								</view>
 							</view>
 							<view class='login-quick'>
 								<view>忘记密码?</view>
 								<view>免密登录</view>
 							</view>
-							<view class='tel'>登录</view>
+							<view class='tel' @tap='submit'>登录</view>
 							<view class='reminder'>温馨提示：您可以选择免密登录，更加方便</view>
 							<LoginOther></LoginOther>
 						</view>
@@ -67,14 +67,68 @@
 	export default {
 		data() {
 			return {
-				
+				//用户输入的内容
+				userName:"",
+				userPwd:"",
+				//验证的规格
+				rules:{
+					userName:{
+						rule:/\S/,
+						msg:"账号不能为空"
+					},
+					userPwd:{
+						rule:/^[0-9a-zA-z]{6,16}$/,
+						msg:"密码应该为6-16位字符"
+					}
+				}
 			}
 		},
 		components:{
 			LoginOther
 		},
 		methods: {
-			
+			//关闭当前页面，返回上一页
+			goBack(){
+				uni.navigateBack({
+					delta:1
+				})
+			},
+			//点击登录
+			submit(){
+				if(  !this.validate('userName')  ) return;
+				if(  !this.validate("userPwd") )   return;
+				
+				uni.showLoading({
+					title:"登录中..."
+				})
+				
+				setTimeout(()=>{
+					uni.hideLoading();
+					uni.navigateBack({
+						delta:1
+					})
+				},2000)
+				
+			},
+			//判断验证是否符合要求
+			validate(key){
+				let bool = true;
+				if(  !this.rules[key].rule.test(this[key]) ){
+					uni.showToast({
+						title:this.rules[key].msg,
+						icon:"none"
+					})
+					bool=false;
+					return false;
+				}
+				return bool;
+			},
+			//进入手机号注册页面
+			goLoginTel(){
+				uni.navigateTo({
+					url:"../login-tel/login-tel"
+				})
+			}
 		}
 	}
 </script>

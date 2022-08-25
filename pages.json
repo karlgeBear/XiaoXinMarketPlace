@@ -216,6 +216,22 @@
 			}
             
         }
+        ,{
+            "path" : "pages/login-tel/login-tel",
+			"style": {
+           				"navigationBarTitleText": "输入手机号",
+           				"navigationBarBackgroundColor":"#FFFFFF"
+           			}
+            
+        }
+        ,{
+            "path" : "pages/login-code/login-code",
+            "style" : {
+						"navigationBarTitleText": "输入验证码",
+						"navigationBarBackgroundColor":"#FFFFFF"
+					}
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
