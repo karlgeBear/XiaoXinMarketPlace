@@ -263,7 +263,38 @@ onLoad(e) {
 	要对应数据库里的那份数据库表进行增删改查？
 	那么数据表怎么设计？id为账户？其它字段为用户的数据信息？
 ```
-## 登录验证
+## 登录
 - 给input绑定v-model
 - 设计正则验证规则
 - 点击登陆，正则验证
+- 发post请求，把前端的input作为参数传给后端，后端进行sql查询，返回相应的数据
+- 点击登录成功，直接将数据库中的用户数据赋值给vuex(user)的state,作为全局状态管理，
+- 根据user.state.loginStatus判断用户是否登录，直接将户用数据赋值到页面
+## 持久化储存
+- 需求：再次打开app,没有显示登入状态，未保存用户数据
+- 可以利用uni.setStorageSync('key',JSON.stringify(value))和uni.getStorageSync('key')实现
+- 过程：
+	- 打开app点击登录，在vuex的user中读取用户信息，储存用户信息（由于每次刷新页面都会在执行App.js中的方法，在里边执行一下initUser.js就好了）；
+	- 再次点开app,...mapGetter()直接在vuex中读取数据，赋值用户数据到页面
+```user.js
+mutations:{
+		//一旦进入了app,就需要执行这个方法,把用户信息读出来
+		initUser(state){
+			let userInfo = uni.getStorageSync('userInfo');
+			if( userInfo ){
+				userInfo = JSON.parse( userInfo );
+				state.userInfo = userInfo;
+				state.loginStatus = true;
+				state.token = userInfo.token;
+			}
+		},
+		//登录后保存用户信息
+		login(state,userInfo){
+			state.userInfo = userInfo;
+			state.loginStatus = true;
+			state.token = userInfo.token;
+			//持久化存储 ===>把对象转换成字符串
+			uni.setStorageSync('userInfo',JSON.stringify(userInfo));
+		}
+	},
+```

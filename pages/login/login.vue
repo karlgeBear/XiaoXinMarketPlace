@@ -64,6 +64,8 @@
 
 <script>
 	import LoginOther from '@/components/login/login-other.vue'
+	import $http from '@/common/api/request.js'
+	import {mapMutations} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -87,6 +89,7 @@
 			LoginOther
 		},
 		methods: {
+			...mapMutations(['login']),
 			//关闭当前页面，返回上一页
 			goBack(){
 				uni.navigateBack({
@@ -95,20 +98,43 @@
 			},
 			//点击登录
 			submit(){
-				if(  !this.validate('userName')  ) return;
+				if(  !this.validate('userName') ) return;
 				if(  !this.validate("userPwd") )   return;
 				
 				uni.showLoading({
 					title:"登录中..."
 				})
 				
-				setTimeout(()=>{
-					uni.hideLoading();
-					uni.navigateBack({
-						delta:1
+				$http.request({
+					url:"/login",
+					method:"POST",
+					data:{
+						userName:this.userName,
+						userPwd:this.userPwd
+					}
+				}).then((res)=>{
+					console.log(res)
+					//保存用户信息
+					this.login(res.data);
+					uni.showToast({
+						title:res.msg,
+						icon:"none"
 					})
-				},2000)
-				
+					
+					if(res.success){
+						uni.hideLoading();
+						uni.navigateBack({
+							delta:1
+						})
+					}
+					
+					
+				}).catch(()=>{
+					uni.showToast({
+						title:'请求失败',
+						icon:'none'
+					})
+				})
 			},
 			//判断验证是否符合要求
 			validate(key){
