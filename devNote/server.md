@@ -55,3 +55,25 @@ var User = {
 
 exports = module.exports = User;
 ```
+
+## token
+### 理解：
+- 无状态，可以在服务端共享的一个东西
+- 存在服务器数据库里边
+- 永久存储，永久身份令牌
+- 生成自己定，必须不一样，如由id+时间戳+口令生成
+### 优点：
+- 避开同源策略
+- 避免一些攻击
+### 生成token:
+- npm install jsonwebtoken
+```
+//增加一条用户数据
+insertData( param ){
+	const jwt = require('jsonwebtoken');
+	let payload = {name:param.userName}; //用户名
+	let secret = 'xiaoxin';//口令
+	let token = jwt.sign(payload,secret);
+	return 'insert into user (userName,userPwd,phone,avatar,nickName,token) values ("","1234567","'+param.userName+'","../../static/imgs/logo.jpg","默认昵称","'+token+'")';
+}
+```

@@ -38,12 +38,14 @@
 				
 			</scroll-view>
 		</view>
+		<Tabbar cureentPage='list'></Tabbar>
 	</view>
 </template>
 
 <script>
 	import $http from '@/common/api/request.js'
 	import Lines from '@/components/common/Lines.vue'
+	import Tabbar from '@/components/common/Tabbar.vue';
 	export default {
 		data() {
 			return {
@@ -67,7 +69,8 @@
 			this.getData();
 		},
 		components:{
-			Lines
+			Lines,
+			Tabbar
 		},
 		methods: {
 			//请求数据方法

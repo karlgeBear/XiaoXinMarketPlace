@@ -10,7 +10,11 @@ var User = {
 	},
 	//增加一条用户数据
 	insertData( param ){
-		return 'insert into user (userName,userPwd,phone,imgUrl,nickName,token) values ("","","","","","")';
+		const jwt = require('jsonwebtoken');
+		let payload = {name:param.userName}; //用户名
+		let secret = 'xiaoxin';//口令
+		let token = jwt.sign(payload,secret);
+		return 'insert into user (userName,userPwd,phone,avatar,nickName,token) values ("","1234567","'+param.userName+'","../../static/imgs/logo.jpg","默认昵称","'+token+'")';
 	}
 }
 

@@ -6,7 +6,7 @@
 				<view class='header-config' @tap='goConfig'>
 					<image class='config-img' src="../../static/imgs/config.png" mode=""></image>
 				</view>
-				<view class='header-logo' @tap='goLogin'>
+				<view class='header-logo'>
 					<image class='logo-img' :src=" loginStatus ? userInfo.avatar : '../../static/imgs/Children.jpg' " mode=""></image>
 					<view class='logo-name'>
 						{{  loginStatus ? userInfo.nickName : "用户名称"   }}
@@ -74,18 +74,22 @@
 				<view>我的收藏</view>
 				<view>></view>
 			</view>
-			
 		</view>
+		<Tabbar cureentPage='my'></Tabbar>
 	</view>
 </template>
 
 <script>
 	import {mapState} from 'vuex';
+	import Tabbar from '@/components/common/Tabbar.vue';
 	export default {
 		data() {
 			return {
 				
 			}
+		},
+		components:{
+			Tabbar
 		},
 		computed:{
 		...mapState({
@@ -102,11 +106,6 @@
 			goOrder(){
 				uni.navigateTo({
 					url:'../my-order/my-order'
-				})
-			},
-			goLogin(){
-				uni.navigateTo({
-					url:"../login/login"
 				})
 			}
 		}

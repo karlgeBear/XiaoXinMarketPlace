@@ -61,6 +61,7 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<Tabbar cureentPage='index'></Tabbar>
 	</view>
 </template>
 
@@ -74,6 +75,7 @@
 	import Icons from '@/components/index/Icons.vue'
 	import Hot from '@/components/index/Hot.vue'
 	import Shop from '@/components/index/Shop.vue'
+	import Tabbar from '@/components/common/Tabbar.vue';
 	export default {
 		data() {
 			return {
@@ -97,7 +99,8 @@
 			Banner,
 			Icons,
 			Hot,
-			Shop
+			Shop,
+			Tabbar
 		},
 		onLoad() {
 			this.__init();

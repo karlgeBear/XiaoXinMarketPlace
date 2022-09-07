@@ -296,5 +296,38 @@ mutations:{
 			//持久化存储 ===>把对象转换成字符串
 			uni.setStorageSync('userInfo',JSON.stringify(userInfo));
 		}
+		//退出登录
+		loginOut(state){
+			state.loginStatus = false;
+			state.userInfo = {};
+			state.token = null;
+			//删除本地存储的信息
+			uni.removeStorageSync('userInfo');
+		}
 	},
 ```
+## 自定义tabbar（就是btmNav, 页面路由pages.json 中提供 tabBar 配置）
+- 需求：点击tababr，跳到tababr页面，需要判断是否登录，需要做事件拦截
+- 自己写一个底部导航栏公共组件，进行跳转拦截
+- 用三方插件也可实现
+
+## 权限跳转
+- 需求：点击页面内容，需要是否确定是否登录。未登录就跳到登录界面
+- main.js中设置Vue.prototype.navigateTo = (option) ={}
+```main.js
+//权限跳转
+Vue.prototype.navigateTo = (options)=>{
+	if( !store.state.user.loginStatus ){
+		uni.showToast({
+			title:"请先登录",
+			icon:"none"
+		})
+		return	uni.navigateTo({
+				url:"/pages/login/login"
+			})
+	}
+	uni.navigateTo(options)
+}
+```
+## 注册手机号&&接入短信SDK
+- 正则验证，请求数据库接口，查询手机号是否在数据库存在，存在则发送验证码

@@ -3,6 +3,9 @@ var router = express.Router();
 var connection = require('../db/sql.js');
 var user = require('../db/userSql.js');
 
+// 短信验证码
+let code = ''
+
 router.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
@@ -16,6 +19,71 @@ router.all('*', function (req, res, next) {
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+//注册===>增加一条数据
+router.post('/api/addUser', function(req, res, next) {
+	//前端给后端的数据
+	let params = {
+		userName : req.body.userName,
+		userCode : req.body.code
+	};
+	console.log(params.userCode,code,params.userCode==code)
+	if(  params.userCode == code   ){
+		console.log(user.insertData( params ))
+		connection.query( user.insertData( params ) , function (error, results, fields) {
+		    res.send({
+				data:{
+					success:true,
+					msg:"注册成功"
+				}
+			})
+		})
+	}
+	
+})
+
+
+// 发送短信验证码(可以使用腾讯云的短信，为了方便，这里值设置一个随机数字验证码)
+router.get('/api/code',function(req ,res, next){
+	let randomNum = Math.floor(Math.random()*(1000000-0+1)+0)
+	code = randomNum
+	console.log('短信验证码为：',randomNum)
+	res.json({
+		code:0,
+		data:{
+			code:randomNum
+		}
+	})
+})
+
+//注册验证手机号是否存在
+router.post('/api/registered', function(req, res, next) {
+	
+	//前端给后端的数据
+	let params = {
+		userName : req.body.phone
+	};
+	// 随机验证码
+	let randomNum = Math.floor(Math.random()*(1000000-0+1)+0)
+	//查询手机号是否存在
+	connection.query( user.queryUserName( params ) , function (error, results, fields) {
+		if( results.length > 0 ){
+			res.send({
+				data:{
+					success:false,
+					msg:"手机号已经存在"
+				}
+			})
+		}else{
+			res.send({
+				data:{
+					success:true
+				}
+			})
+		}
+	})
+	
+})
 
 //用户登录
 router.post('/api/login', function(req, res, next) {

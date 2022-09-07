@@ -17,6 +17,7 @@
 
 <script>
 	import Lines from '@/components/common/Lines.vue'
+	import $http from '@/common/api/request.js'
 	export default {
 		data() {
 			return {
@@ -37,6 +38,7 @@
 			//判断验证是否符合要求
 			validate(key){
 				let bool = true;
+				// console.log('判断:',this.rules[key].rule.test(1234567891)[0])
 				if(  !this.rules[key].rule.test(this[key]) ){
 					uni.showToast({
 						title:this.rules[key].msg,
@@ -48,9 +50,32 @@
 				return bool;
 			},
 			goNextCode(){
+				// console.log(this.validate('userTel'),this.userTel)
 				if(  !this.validate('userTel')  ) return;
-				uni.navigateTo({
-					url:"../login-code/login-code"
+				$http.request({
+					url:"/registered",
+					method:"POST",
+					data:{
+						phone:this.userTel
+					}
+				}).then((res)=>{
+					if(!res.success){
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						})
+						return ;
+					}else{
+						uni.navigateTo({
+							url:`../login-code/login-code?phone=${this.userTel}`
+						})
+					}
+					
+				}).catch(()=>{
+					uni.showToast({
+						title:'请求失败',
+						icon:'none'
+					})
 				})
 			}
 		}

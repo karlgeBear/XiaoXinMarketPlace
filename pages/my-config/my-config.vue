@@ -61,7 +61,7 @@
 				})
 				this.loginOut();
 				//
-				uni.switchTab({
+				uni.reLaunch({
 					url:"../index/index"
 				})
 			}
