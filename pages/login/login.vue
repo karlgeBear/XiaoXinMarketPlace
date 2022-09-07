@@ -113,22 +113,23 @@
 						userPwd:this.userPwd
 					}
 				}).then((res)=>{
-					console.log(res)
-					//保存用户信息
-					this.login(res.data);
-					uni.showToast({
-						title:res.msg,
-						icon:"none"
-					})
-					
 					if(res.success){
+						//保存用户信息
+						this.login(res.data);
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						})
 						uni.hideLoading();
 						uni.navigateBack({
 							delta:1
 						})
+					}else{
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						})
 					}
-					
-					
 				}).catch(()=>{
 					uni.showToast({
 						title:'请求失败',

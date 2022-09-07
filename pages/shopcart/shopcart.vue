@@ -151,7 +151,7 @@
 	border-top:2rpx solid #F7F7F7;
 	background-color: #FFFFFF;
 	position: fixed;
-	bottom:0;
+	bottom:120rpx;
 	left:0;
 	width:100%;
 	height: 100rpx;

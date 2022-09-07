@@ -200,7 +200,7 @@
 			},
 			//跳转到购物车页面
 			goShopCart(){
-				uni.switchTab({
+				uni.navigateTo({
 					url:'../shopcart/shopcart'
 				})
 			},

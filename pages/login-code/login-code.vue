@@ -31,7 +31,6 @@
 				//用户输入的内容
 				userCode:'',
 				// 获取的验证码
-				code:'',
 				// 用户的手机号
 				phone:''
 			}
@@ -74,21 +73,11 @@
 					clearInterval(timer);
 					this.codeNum=30;
 					this.disabled = false;
-					this.codeMsg = '重新发送';
-					// this.code = ''
+					this.codeMsg = '重新发送';     
 				},30000)
 			},
 			//点击下一步
 			goNextIndex(){
-				console.log('验证码对比：',parseInt(this.userCode),this.code,parseInt(this.userCode)==this.code)
-				if(parseInt(this.userCode) !== this.code) {
-					uni.showToast({
-						title:'验证码输入错误',
-						icon:'none'
-					})
-					return;
-				}
-				console.log('验证通过',this.phone,this.userCode,this.code)
 				$http.request({
 					url:"/addUser",
 					method:"POST",
