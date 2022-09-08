@@ -1,3 +1,4 @@
+import store from '@/store/index.js'
 export default{
 	// 192.168.0.100 || 192.168.1.7
 	common:{
@@ -21,6 +22,21 @@ export default{
 		options.header = options.header || this.common.header;
 		options.method = options.method || this.common.method;
 		options.dataType = 	options.dataType || this.common.dataType;
+		
+		//判断是否传入了header头的token进行用户是否登录的验证
+		if(options.header.token){
+			options.header.token = store.state.user.token;
+			if(!options.header.token){
+				uni.showToast({
+					title:"请先登录",
+					icon:"none"
+				})
+				return uni.navigateTo({
+					url:"/pages/login/login"
+				})
+			}
+		}
+		
 		return new Promise((res,rej)=>{
 			uni.request({
 				...options,

@@ -27,15 +27,16 @@ router.post('/api/addUser', function(req, res, next) {
 		userName : req.body.userName,
 		userCode : req.body.code
 	};
-	console.log(params.userCode,code,params.userCode==code)
 	if(  params.userCode == code   ){
-		console.log(user.insertData( params ))
 		connection.query( user.insertData( params ) , function (error, results, fields) {
-		    res.send({
-				data:{
-					success:true,
-					msg:"注册成功"
-				}
+		   connection.query( user.queryUserName( params ) , function (err, result) {
+				res.send({
+					data:{
+						success:true,
+						msg:"注册成功",
+						data:result[0]
+					}
+				})
 			})
 		})
 	}

@@ -331,3 +331,47 @@ Vue.prototype.navigateTo = (options)=>{
 ```
 ## 注册手机号&&接入短信SDK
 - 正则验证，请求数据库接口，查询手机号是否在数据库存在，存在则发送验证码
+
+## 前端使用token
+- 登录成功，后端会返给前端一个token,存在state中，
+- 如果没有登录，给所有需要判断是否登录且调用接口的操作，做一个鉴权，
+- 在请求封装中做统一处理
+```
+	request( options={} ){
+		options.url = this.common.baseUrl + options.url;
+		options.data = 	options.data || this.common.data;
+		options.header = options.header || this.common.header;
+		options.method = options.method || this.common.method;
+		options.dataType = 	options.dataType || this.common.dataType;
+		
+		//判断是否传入了header头的token进行用户是否登录的验证
+		if(options.header.token){
+			options.header.token = store.state.user.token;
+			if(!options.header.token){
+				uni.showToast({
+					title:"请先登录",
+					icon:"none"
+				})
+				return uni.navigateTo({
+					url:"/pages/login/login"
+				})
+			}
+		}
+		
+		return new Promise((res,rej)=>{
+			uni.request({
+				...options,
+				success: (result) => {
+					if(result.statusCode != 200){
+						return rej();
+					}
+					// setTimeout(function () {
+					//     uni.hideLoading();
+					// }, 500);
+					let data = result.data.data;
+					res(data);
+				}
+			})
+		})
+	}
+```
